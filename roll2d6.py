@@ -1,0 +1,75 @@
+import random
+import datetime
+
+makeRoll = True
+rollCount = 0
+rollMessage = "Now make your move." #Default message
+
+#Function simulates rolling 2 6-sided dice, displaying the result and a message
+def roll_the_dice():
+    global makeRoll
+    global rollCount
+    global rollMessage
+
+    if rollCount < 3:
+        d6_1 = int(random.randrange(1, 7)) #Dice 1
+        #d6_1 = int(6) #Hardcoded to simplify output testing
+        d6_2 = int(random.randrange(1, 7)) #Dice 2
+        #d6_2 = int(6) #Hardcoded to simplify output testing
+
+        #Below code can be used with NumPy
+        #roll = random.randint(1, 7, size=(2))
+        #d6_1 = roll[0]
+        #d6_2 = roll[1]
+
+        rollCount += 1
+
+        rolled_total = d6_1 + d6_2 #Added the dice rolls together
+
+        rollMessage = decide_message(rolled_total)
+
+        print("Rolling 2 6-sided dice gives... ")
+        print(str(d6_1) + " and " + str(d6_2) + ", making " + str(rolled_total) + ".")
+        print(rollMessage)
+
+        record_roll(d6_1, d6_2) #Log the rolled numbers
+
+        #Stop rolling if the result is not 2 sixes
+        if rolled_total != 12:
+            makeRoll = False
+    else:
+        makeRoll = False
+        print("...or not. I think you've had enough turns...!")
+
+def decide_message(rolled_total = 0):
+    global rollMessage
+    if rolled_total == 2:
+        rollMessage = "Snake eyes!"
+    elif rolled_total == 4:
+        rollMessage = "Key in the door!"
+    elif rolled_total == 11:
+        rollMessage = "Almost there!"
+    elif rolled_total == 12:
+        rollMessage = "Roll again!"
+    return rollMessage
+
+def record_roll(d6_1 = 0, d6_2 = 0):
+    rolled_total = d6_1 + d6_2 #Added the dice rolls together
+    now_val = datetime.datetime.now()
+    now_string = now_val.strftime("%Y%m%d")
+    now_txt = now_val.strftime("%Y-%m-%d %H:%M:%S")
+    f = open("roll_logs/roll_log_" + now_string + ".txt", "a")
+    f.write(now_txt + " - " + str(d6_1) + " + " + str(d6_2) + " = " + str(rolled_total) + "\n")
+    f.close()
+
+while makeRoll:
+    #roll_the_dice()
+    startRoll = input("Roll the dice (y/n)?") #Ask user to confirm dice roll
+
+    if startRoll == "Y" or startRoll == "y":
+        roll_the_dice() #User has agreed to roll the dice
+    elif startRoll == "N" or startRoll == "n":
+        print("Oh, okay then.") #No dice roll, stop process
+        break
+    else:
+        print("Um, that's not a Y or an N?") #Remind user of valid options
