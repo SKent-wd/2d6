@@ -13,9 +13,7 @@ def roll_the_dice():
 
     if rollCount < 3:
         d6_1 = int(random.randrange(1, 7)) #Dice 1
-        #d6_1 = int(6) #Hardcoded to simplify output testing
         d6_2 = int(random.randrange(1, 7)) #Dice 2
-        #d6_2 = int(6) #Hardcoded to simplify output testing
 
         #Below code can be used with NumPy
         #roll = random.randint(1, 7, size=(2))
@@ -45,8 +43,14 @@ def decide_message(rolled_total = 0):
     global rollMessage
     if rolled_total == 2:
         rollMessage = "Snake eyes!"
+    elif rolled_total == 3:
+        rollMessage = "Cup of tea!"
     elif rolled_total == 4:
         rollMessage = "Key in the door!"
+    elif rolled_total == 5:
+        rollMessage = "Man alive!"
+    elif rolled_total == 7:
+        rollMessage = "Lucky for some!"
     elif rolled_total == 11:
         rollMessage = "Almost there!"
     elif rolled_total == 12:
@@ -63,7 +67,6 @@ def record_roll(d6_1 = 0, d6_2 = 0):
     f.close()
 
 while makeRoll:
-    #roll_the_dice()
     startRoll = input("Roll the dice (y/n)?") #Ask user to confirm dice roll
 
     if startRoll == "Y" or startRoll == "y":
