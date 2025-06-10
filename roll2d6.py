@@ -1,8 +1,9 @@
 import random
 import datetime
 
-makeRoll = True
-rollCount = 0
+#Global variables
+makeRoll = True #Flag for allowing the dice roll
+rollCount = 0 #Count the number of dice rolls
 rollMessage = "Now make your move." #Default message
 
 #Function simulates rolling 2 6-sided dice, displaying the result and a message
@@ -15,16 +16,16 @@ def roll_the_dice():
         d6_1 = int(random.randrange(1, 7)) #Dice 1
         d6_2 = int(random.randrange(1, 7)) #Dice 2
 
-        #Below code can be used with NumPy
+        #Below code can be used with NumPy - to be implemented later
         #roll = random.randint(1, 7, size=(2))
         #d6_1 = roll[0]
         #d6_2 = roll[1]
 
-        rollCount += 1
+        rollCount += 1 #Increment the dice roll count
 
-        rolled_total = d6_1 + d6_2 #Added the dice rolls together
+        rolled_total = d6_1 + d6_2 #Add the dice roll results together
 
-        rollMessage = decide_message(rolled_total)
+        rollMessage = decide_message(rolled_total) #Set message
 
         print("Rolling 2 6-sided dice gives... ")
         print(str(d6_1) + " and " + str(d6_2) + ", making " + str(rolled_total) + ".")
@@ -39,6 +40,7 @@ def roll_the_dice():
         makeRoll = False
         print("...or not. I think you've had enough turns...!")
 
+#Function sets the output message based on the numerical value given
 def decide_message(rolled_total = 0):
     global rollMessage
     if rolled_total == 2:
@@ -49,6 +51,8 @@ def decide_message(rolled_total = 0):
         rollMessage = "Key in the door!"
     elif rolled_total == 5:
         rollMessage = "Man alive!"
+    elif rolled_total == 6:
+        rollMessage = "Halfway there!"
     elif rolled_total == 7:
         rollMessage = "Lucky for some!"
     elif rolled_total == 11:
@@ -57,6 +61,7 @@ def decide_message(rolled_total = 0):
         rollMessage = "Roll again!"
     return rollMessage
 
+#Writes the results into a text file
 def record_roll(d6_1 = 0, d6_2 = 0):
     rolled_total = d6_1 + d6_2 #Added the dice rolls together
     now_val = datetime.datetime.now()
@@ -66,6 +71,7 @@ def record_roll(d6_1 = 0, d6_2 = 0):
     f.write(now_txt + " - " + str(d6_1) + " + " + str(d6_2) + " = " + str(rolled_total) + "\n")
     f.close()
 
+#Prompts user to start the dice roll
 while makeRoll:
     startRoll = input("Roll the dice (y/n)?") #Ask user to confirm dice roll
 
