@@ -55,10 +55,11 @@ def decide_message(rolled_total=0):
     if rolled_total < 2 or rolled_total > 12:
         sys.exit("Total returned as " + str(rolled_total) + " - totals can only be from 2 to 12.")
 
-    # If this is a bonus roll, update the default message
+    # If this is a bonus roll, reset the default message
     if rollCount > 1:
         rollMessage = "Now make your next move."  # Default bonus roll message
 
+    # Set an output message based on the total value rolled
     if rolled_total == 2:
         rollMessage = "Snake eyes!"
     elif rolled_total == 3:
@@ -71,6 +72,8 @@ def decide_message(rolled_total=0):
         rollMessage = "Halfway there!"
     elif rolled_total == 7:
         rollMessage = "Lucky for some!"
+    elif rolled_total == 8:
+        rollMessage = "Garden gate!"
     elif rolled_total == 11:
         rollMessage = "Almost there!"
     elif rolled_total == 12:
@@ -94,18 +97,18 @@ def plot_roll(d6_1=0, d6_2=0):
     make_plot = input("Create plot based on roll (y/n)?")  # Ask user to confirm plot creation
     if make_plot == "Y" or make_plot == "y":
         rolled_total = d6_1 + d6_2  # Added the dice rolls together
-        now_val = datetime.datetime.now()
-        now_string = now_val.strftime("%Y%m%d%H%M%S")
+        now_val = datetime.datetime.now()  # Get the current datetime
+        now_string = now_val.strftime("%Y%m%d%H%M%S")  # Create string representing current datetime
 
-        x = np.array(["Die 1", "Die 2", "Total"])
-        y = np.array([d6_1, d6_2, rolled_total])
+        x = np.array(["Die 1", "Die 2", "Total"])  # X axis labels
+        y = np.array([d6_1, d6_2, rolled_total])  # Y axis values
 
         plt.bar(x, y)
-        plt.savefig("roll_plots/roll_plot_" + now_string + ".png")
+        plt.savefig("roll_plots/roll_plot_" + now_string + ".png")  # Save the plot as a png file
 
         print("roll_plot_" + now_string + ".png has been created.")
     elif make_plot == "N" or make_plot == "n":
-        pass
+        pass  # Do nothing and continue process
     else:
         print("Please type either Y or N.")  # Remind user of valid options
 
