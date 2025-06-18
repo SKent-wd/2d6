@@ -20,7 +20,7 @@ def roll_the_dice():
     global rollMessage
 
     if rollCount < 3:
-        # Below code can be used with NumPy - to be implemented later
+        # Below code uses NumPy to get 2 random numbers, each between 1 and 6
         roll = random.randint(1, 7, size=2)
         d6_1 = int(roll[0])  # Dice 1
         d6_2 = int(roll[1])  # Dice 2
@@ -31,6 +31,7 @@ def roll_the_dice():
 
         rollMessage = decide_message(rolled_total)  # Set message
 
+        # Begin displaying output
         print("Rolling 2 6-sided dice gives... ")
         print(str(d6_1) + " and " + str(d6_2) + ", making " + str(rolled_total) + ".")
         print(rollMessage)
@@ -42,7 +43,7 @@ def roll_the_dice():
         if rolled_total != 12:
             makeRoll = False
     else:
-        makeRoll = False
+        makeRoll = False # Stops rolls when maximum roll count reached
         print("...or not. I think you've had enough turns...!")
 
 
@@ -84,10 +85,10 @@ def decide_message(rolled_total=0):
 # Writes the results into a text file
 def record_roll(d6_1=0, d6_2=0):
     rolled_total = d6_1 + d6_2  # Added the dice rolls together
-    now_val = datetime.datetime.now()
-    now_string = now_val.strftime("%Y%m%d")
-    now_txt = now_val.strftime("%Y-%m-%d %H:%M:%S")
-    f = open("roll_logs/roll_log_" + now_string + ".txt", "a")
+    now_val = datetime.datetime.now() # Get the current datetime
+    now_string = now_val.strftime("%Y%m%d") # Get string representing current date
+    now_txt = now_val.strftime("%Y-%m-%d %H:%M:%S") # Get string representing current date and time
+    f = open("roll_logs/roll_log_" + now_string + ".txt", "a") # Opens (creates if required) text log for current date
     f.write(now_txt + " - " + str(d6_1) + " + " + str(d6_2) + " = " + str(rolled_total) + "\n")
     f.close()
 
